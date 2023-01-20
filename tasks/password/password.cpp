@@ -22,7 +22,7 @@ bool ValidatePassword(const std::string& password) {
             small_letters = 1;
             continue;
         }
-        if (std::islower(static_cast<unsigned char>(password[i]))) {
+        if (std::isdigit(static_cast<unsigned char>(password[i]))) {
             numbers = 1;
             continue;
         }
