@@ -3,8 +3,8 @@
 #include <string>
 
 bool IsPalindrome(const std::string& str) {
-    int left = 0;
-    int right = str.size() - 1;
+    size_t left = 0;
+    size_t right = str.size() - 1;
     while (left < right) {
         while (left < str.size() && str[left] == ' ') {
             ++left;
