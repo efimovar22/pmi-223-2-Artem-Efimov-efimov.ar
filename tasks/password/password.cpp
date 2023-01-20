@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+constexpr int cnst_126 = 126;
+constexpr int cnst_33 = 33;
+
 bool ValidatePassword(const std::string& password) {
     int big_letters = 0;
     int small_letters = 0;
@@ -11,7 +14,7 @@ bool ValidatePassword(const std::string& password) {
         return false;
     }
     for (size_t i = 0; i < password.size(); ++i) {
-        if (int(password[i]) < 33 || int(password[i]) > 126) {
+        if (int(password[i]) < cnst_33 || int(password[i]) > cnst_126) {
             return false;
         }
         if (std::isupper(static_cast<unsigned char>(password[i]))) {
