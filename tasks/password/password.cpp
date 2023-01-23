@@ -9,10 +9,10 @@ const char MAX_NUM_SYMB = 14;
 const char DIFFERENT_TYPES = 3;
 
 bool ValidatePassword(const std::string& password) {
-    bool has_big_letters = 0;
-    bool has_small_letters = 0;
-    bool has_numbers = 0;
-    bool has_other = 0;
+    bool has_big_letters = false;
+    bool has_small_letters = false;
+    bool has_numbers = false;
+    bool has_other = false;
     if (password.size() < MIN_NUM_SYMB || password.size() > MAX_NUM_SYMB) {
         return false;
     }
@@ -21,18 +21,18 @@ bool ValidatePassword(const std::string& password) {
             return false;
         }
         if (std::isupper(password[i])) {
-            has_big_letters = 1;
+            has_big_letters = true;
             continue;
         }
         if (std::islower(password[i])) {
-            has_small_letters = 1;
+            has_small_letters = true;
             continue;
         }
         if (std::isdigit(password[i])) {
-            has_numbers = 1;
+            has_numbers = true;
             continue;
         }
-        has_other = 1;
+        has_other = true;
     }
     if (has_big_letters + has_small_letters + has_numbers + has_other < DIFFERENT_TYPES) {
         return false;
