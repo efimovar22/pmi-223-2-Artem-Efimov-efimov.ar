@@ -9,7 +9,7 @@ std::vector<std::string> FindClosestWords(const std::vector<std::string>& words,
     for (size_t i = 1; i < vectors.size(); ++i) {
         int64_t sum = 0;
         for (size_t j = 0; j < vectors[i].size(); ++j) {
-            sum += vectors[0][j] * vectors[i][j];
+            sum += static_cast<int64_t>(vectors[0][j]) * static_cast<int64_t>(vectors[i][j]);
         }
         diff.push_back(sum);
         if (sum > max_value) {
