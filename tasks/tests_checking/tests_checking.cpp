@@ -4,11 +4,11 @@
 std::vector<std::string> StudentsOrder(const std::vector<StudentAction>& student_actions,
                                        const std::vector<size_t>& queries) {
     std::deque<std::string> d = {};
-    for (size_t i = 0; i < student_actions.size(); ++i) {
-        if (student_actions[i].side == Side::Top) {
-            d.push_front(student_actions[i].name);
+    for (auto i : student_actions) {
+        if (i.side == Side::Top) {
+            d.push_front(i.name);
         } else {
-            d.push_back(student_actions[i].name);
+            d.push_back(i.name);
         }
     }
     std::vector<std::string> ans = {};
