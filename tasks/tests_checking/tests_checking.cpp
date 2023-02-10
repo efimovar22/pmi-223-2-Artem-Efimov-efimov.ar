@@ -11,9 +11,9 @@ std::vector<std::string> StudentsOrder(const std::vector<StudentAction>& student
             d.push_back(i.name);
         }
     }
-    std::vector<std::string> ans = {};
+    std::vector<std::string> answer = {};
     for (size_t i = 0; i < queries.size(); ++i) {
-        ans.push_back(d[queries[i] - 1]);
+        answer.push_back(d[queries[i] - 1]);
     }
-    return ans;
+    return answer;
 }
