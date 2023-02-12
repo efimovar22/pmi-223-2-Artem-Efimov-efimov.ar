@@ -7,12 +7,12 @@ bool TimeComparator(const Event* event_1, const Event* event_2) {
 
 bool ExistsName(const std::string& name) {
     std::map<std::string, std::map<std::string, int>> check_tasks;
-    return check_tasks.find(name) != check_tasks.end();
+    return check_tasks.contains(name);
 }
 
 bool ExistsProblem(const std::string& s, const std::string& name) {
     std::map<std::string, std::map<std::string, int>> check_tasks;
-    return check_tasks[s].find(name) != check_tasks[s].end();
+    return check_tasks[s].contains(name);
 }
 
 ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
