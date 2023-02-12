@@ -17,7 +17,7 @@ bool ExistsProblem(const std::string& s, const std::string& name) {
 
 ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
     ScoreTable ans = {};
-    std::map<std::string, std::map<std::string, int>> check_tasks;
+    std::map<std::string, std::map<std::string, std::pair<int, int>>> check_tasks;
     std::vector<const Event*> sorted_events;
     for (auto& i : events) {
         sorted_events.push_back(&i);
@@ -28,33 +28,23 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
             break;
         }
         if (not ExistsName(i->student_name)) {
-            check_tasks[i->student_name][i->task_name] = 0;
+            check_tasks[i->student_name][i->task_name].first = 0;
+            check_tasks[i->student_name][i->task_name].second = 0;
         } else if (not ExistsProblem(i->student_name, i->task_name)) {
-            check_tasks[i->student_name][i->task_name] = 0;
+            check_tasks[i->student_name][i->task_name].first = 0;
+            check_tasks[i->student_name][i->task_name].second = 0;
         }
         if (i->event_type == EventType::CheckSuccess) {
-            if (check_tasks[i->student_name][i->task_name] != 2) {
-                check_tasks[i->student_name][i->task_name] = 1;
-            } else {
-                check_tasks[i->student_name][i->task_name] = 3;
-            }
+            check_tasks[i->student_name][i->task_name].first = 1;
         } else if (i->event_type == EventType::MergeRequestOpen) {
-            if (check_tasks[i->student_name][i->task_name] == 0) {
-                check_tasks[i->student_name][i->task_name] = 2;
-            } else {
-                check_tasks[i->student_name][i->task_name] = 3;
-            }
-        } else if (i->event_type == EventType::MergeRequestClosed) {
-            if (check_tasks[i->student_name][i->task_name] == 2 || check_tasks[i->student_name][i->task_name] == 0) {
-                check_tasks[i->student_name][i->task_name] = 0;
-            } else {
-                check_tasks[i->student_name][i->task_name] = 1;
-            }
+            check_tasks[i->student_name][i->task_name].second = 1;
+            } else if (i->event_type == EventType::MergeRequestClosed) {
+            check_tasks[i->student_name][i->task_name].second = 0;
         }
     }
     for (const auto& [i, j] : check_tasks) {
         for (const auto& [a, b] : j) {
-            if (b == 1) {
+            if (b.first == 1 && b.second == 0) {
                 ans[i].insert(a);
             }
         }
