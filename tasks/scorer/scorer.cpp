@@ -24,7 +24,7 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         } else if (i->event_type == EventType::MergeRequestClosed) {
             check_tasks[i->student_name][i->task_name].second = false;
         } else if (i->event_type == EventType::CheckFailed) {
-            check_tasks[i->student_name][i->task_name].second = false;
+            check_tasks[i->student_name][i->task_name].first = false;
         }
     }
     for (const auto& [i, j] : check_tasks) {
