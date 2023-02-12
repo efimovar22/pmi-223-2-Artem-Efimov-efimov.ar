@@ -25,7 +25,7 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
     std::sort(sorted_events.begin(), sorted_events.end(), TimeComparator);
     for (auto& i : sorted_events) {
         if (i->time > score_time) {
-            break;
+            break;gi
         }
         if (not ExistsName(i->student_name)) {
             check_tasks[i->student_name][i->task_name].first = 0;
@@ -40,6 +40,8 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         } else if (i->event_type == EventType::MergeRequestOpen) {
             check_tasks[i->student_name][i->task_name].second = 1;
         } else if (i->event_type == EventType::MergeRequestClosed) {
+            check_tasks[i->student_name][i->task_name].second = 0;
+        } else if (i->event_type == EventType::CheckFailed) {
             check_tasks[i->student_name][i->task_name].second = 0;
         }
     }
