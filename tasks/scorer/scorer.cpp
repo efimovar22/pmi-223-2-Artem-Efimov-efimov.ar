@@ -25,7 +25,7 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
     std::sort(sorted_events.begin(), sorted_events.end(), TimeComparator);
     for (auto& i : sorted_events) {
         if (i->time > score_time) {
-            break;gi
+            break;
         }
         if (not ExistsName(i->student_name)) {
             check_tasks[i->student_name][i->task_name].first = 0;
