@@ -2,7 +2,7 @@
 #include <algorithm>
 
 bool TimeComparator(const Event* event_1, const Event* event_2) {
-    return event_1->time < event_2->time;
+    return event_1->time > event_2->time;
 }
 
 bool ExistsName(const std::string& name) {
