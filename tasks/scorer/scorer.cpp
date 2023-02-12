@@ -30,7 +30,8 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         if (not ExistsName(i->student_name)) {
             check_tasks[i->student_name][i->task_name].first = 0;
             check_tasks[i->student_name][i->task_name].second = 0;
-        } else if (not ExistsProblem(i->student_name, i->task_name)) {
+        }
+        if (not ExistsProblem(i->student_name, i->task_name)) {
             check_tasks[i->student_name][i->task_name].first = 0;
             check_tasks[i->student_name][i->task_name].second = 0;
         }
@@ -38,7 +39,7 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
             check_tasks[i->student_name][i->task_name].first = 1;
         } else if (i->event_type == EventType::MergeRequestOpen) {
             check_tasks[i->student_name][i->task_name].second = 1;
-            } else if (i->event_type == EventType::MergeRequestClosed) {
+        } else if (i->event_type == EventType::MergeRequestClosed) {
             check_tasks[i->student_name][i->task_name].second = 0;
         }
     }
