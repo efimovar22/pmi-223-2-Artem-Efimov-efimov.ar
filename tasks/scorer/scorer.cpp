@@ -5,16 +5,6 @@ bool TimeComparator(const Event* event_1, const Event* event_2) {
     return event_1->time < event_2->time;
 }
 
-bool ExistsName(const std::string& name) {
-    std::map<std::string, std::map<std::string, int>> check_tasks;
-    return check_tasks.contains(name);
-}
-
-bool ExistsProblem(const std::string& s, const std::string& name) {
-    std::map<std::string, std::map<std::string, int>> check_tasks;
-    return check_tasks[s].contains(name);
-}
-
 ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
     ScoreTable ans = {};
     std::map<std::string, std::map<std::string, std::pair<int, int>>> check_tasks;
@@ -27,11 +17,11 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         if (i->time > score_time) {
             break;
         }
-        if (not ExistsName(i->student_name)) {
+        if (not check_tasks.contains(i->student_name)) {
             check_tasks[i->student_name][i->task_name].first = 0;
             check_tasks[i->student_name][i->task_name].second = 0;
         }
-        if (not ExistsProblem(i->student_name, i->task_name)) {
+        if (not check_tasks[i->student_name].contains(i->task_name)) {
             check_tasks[i->student_name][i->task_name].first = 0;
             check_tasks[i->student_name][i->task_name].second = 0;
         }
