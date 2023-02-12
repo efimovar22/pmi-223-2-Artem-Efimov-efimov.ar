@@ -39,7 +39,11 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
                 check_tasks[i->student_name][i->task_name] = 4;
             }
         } else if (i->event_type == EventType::MergeRequestOpen) {
-            check_tasks[i->student_name][i->task_name] = 3;
+            if (check_tasks[i->student_name][i->task_name] == 1 or check_tasks[i->student_name][i->task_name] == 4) {
+                check_tasks[i->student_name][i->task_name] = 4;
+            } else {
+                check_tasks[i->student_name][i->task_name] = 3;
+            }
         } else if (i->event_type == EventType::MergeRequestClosed) {
             if (check_tasks[i->student_name][i->task_name] == 4) {
                 check_tasks[i->student_name][i->task_name] = 1;
