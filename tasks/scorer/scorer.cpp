@@ -17,14 +17,18 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         if (i->time > score_time) {
             break;
         }
-        if (i->event_type == EventType::CheckSuccess) {
-            check_tasks[i->student_name][i->task_name].first = true;
-        } else if (i->event_type == EventType::MergeRequestOpen) {
-            check_tasks[i->student_name][i->task_name].second = true;
-        } else if (i->event_type == EventType::MergeRequestClosed) {
-            check_tasks[i->student_name][i->task_name].second = false;
-        } else if (i->event_type == EventType::CheckFailed) {
-            check_tasks[i->student_name][i->task_name].first = false;
+        switch (i->event_type) {
+            case EventType::CheckSuccess:
+                check_tasks[i->student_name][i->task_name].first = true;
+                break;
+            case EventType::MergeRequestOpen:
+                check_tasks[i->student_name][i->task_name].second = true;
+                break;
+            case EventType::MergeRequestClosed:
+                check_tasks[i->student_name][i->task_name].second = false;
+                break;
+            default:
+                check_tasks[i->student_name][i->task_name].first = false;
         }
     }
     for (const auto& [i, j] : check_tasks) {
