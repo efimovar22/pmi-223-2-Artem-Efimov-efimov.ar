@@ -33,22 +33,22 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
             check_tasks[i->student_name][i->task_name] = 0;
         }
         if (i->event_type == EventType::CheckSuccess) {
-            if (check_tasks[i->student_name][i->task_name] != 3) {
+            if (check_tasks[i->student_name][i->task_name] != 2) {
                 check_tasks[i->student_name][i->task_name] = 1;
             } else {
-                check_tasks[i->student_name][i->task_name] = 4;
+                check_tasks[i->student_name][i->task_name] = 3;
             }
         } else if (i->event_type == EventType::MergeRequestOpen) {
-            if (check_tasks[i->student_name][i->task_name] == 1 or check_tasks[i->student_name][i->task_name] == 4) {
-                check_tasks[i->student_name][i->task_name] = 4;
+            if (check_tasks[i->student_name][i->task_name] == 0) {
+                check_tasks[i->student_name][i->task_name] = 2;
             } else {
                 check_tasks[i->student_name][i->task_name] = 3;
             }
         } else if (i->event_type == EventType::MergeRequestClosed) {
-            if (check_tasks[i->student_name][i->task_name] == 4) {
-                check_tasks[i->student_name][i->task_name] = 1;
-            } else {
+            if (check_tasks[i->student_name][i->task_name] == 2 || check_tasks[i->student_name][i->task_name] == 0) {
                 check_tasks[i->student_name][i->task_name] = 0;
+            } else {
+                check_tasks[i->student_name][i->task_name] = 1;
             }
         }
     }
