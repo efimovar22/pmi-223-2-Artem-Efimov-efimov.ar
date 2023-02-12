@@ -2,7 +2,7 @@
 #include <algorithm>
 
 bool TimeComparator(const Event* event_1, const Event* event_2) {
-    return event_1->time > event_2->time;
+    return event_1->time < event_2->time;
 }
 
 bool ExistsName(const std::string& name) {
@@ -32,12 +32,20 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
         } else if (not ExistsProblem(i->student_name, i->task_name)) {
             check_tasks[i->student_name][i->task_name] = 0;
         }
-        if (i->event_type == EventType::CheckSuccess && check_tasks[i->student_name][i->task_name] != 3) {
-            check_tasks[i->student_name][i->task_name] = 1;
+        if (i->event_type == EventType::CheckSuccess) {
+            if (check_tasks[i->student_name][i->task_name] != 3) {
+                check_tasks[i->student_name][i->task_name] = 1;
+            } else {
+                check_tasks[i->student_name][i->task_name] = 4;
+            }
         } else if (i->event_type == EventType::MergeRequestOpen) {
             check_tasks[i->student_name][i->task_name] = 3;
         } else if (i->event_type == EventType::MergeRequestClosed) {
-            check_tasks[i->student_name][i->task_name] = 0;
+            if (check_tasks[i->student_name][i->task_name] == 4) {
+                check_tasks[i->student_name][i->task_name] = 1;
+            } else {
+                check_tasks[i->student_name][i->task_name] = 0;
+            }
         }
     }
     for (const auto& [i, j] : check_tasks) {
