@@ -19,7 +19,7 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
             vector_path.push_back("");
         }
     }
-    for (const auto &i : vector_path) {
+    for (const auto& i : vector_path) {
         if (i == "..") {
             if (!now_path.empty()) {
                 now_path.pop_back();
