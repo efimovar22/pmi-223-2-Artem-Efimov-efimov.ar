@@ -1,6 +1,5 @@
 #include "unixpath.h"
 #include <vector>
-#include <iostream>
 
 std::string NormalizePath(std::string_view current_working_dir, std::string_view path) {
     std::vector<std::string> now_path{""};
@@ -10,6 +9,9 @@ std::string NormalizePath(std::string_view current_working_dir, std::string_view
         } else {
             now_path.push_back("");
         }
+    }
+    if (path[0] == '/') {
+        now_path = {"/"};
     }
     std::vector<std::string> vector_path{""};
     for (const auto& i : path) {
