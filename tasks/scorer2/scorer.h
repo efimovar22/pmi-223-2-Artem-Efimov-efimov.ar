@@ -19,4 +19,5 @@ public:
     void Reset();
 
     ScoreTable GetScoreTable() const;
+    std::map<std::string, std::map<std::string, std::pair<bool, bool>>> check_tasks;
 };
