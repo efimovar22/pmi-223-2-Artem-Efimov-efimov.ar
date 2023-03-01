@@ -14,14 +14,14 @@ void Scorer::OnMergeRequestClosed(const StudentName& student_name, const TaskNam
 void Scorer::Reset() {
     check_tasks.clear();
 }
-ScoreTable Scorer::GetScoreTable() const{
+ScoreTable Scorer::GetScoreTable() const {
     std::map<StudentName, std::set<TaskName>> ans;
     for (const auto& [i, j] : check_tasks) {
-       for (const auto& [a, b] : j) {
-           if (b.first && not b.second) {
-               ans[i].insert(a);
-           }
-       }
+        for (const auto& [a, b] : j) {
+            if (b.first && not b.second) {
+                ans[i].insert(a);
+            }
+        }
     }
     return ans;
 }
