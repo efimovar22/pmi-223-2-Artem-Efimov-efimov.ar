@@ -79,7 +79,6 @@ Poly Poly::operator*(const Poly& other) {
 
 Poly Poly::operator*=(const Poly& other) {
     *this = *this + other;
-    ZeroCoef();
     return *this;
 }
 
