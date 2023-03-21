@@ -9,7 +9,7 @@ void Poly::ZeroCoef() {
     }
 };
 
-Poly::Poly(std::initializer_list<std::pair<int64_t, int64_t>> poly) : coeffs_(poly.begin(), poly.end()){
+Poly::Poly(std::initializer_list<std::pair<int64_t, int64_t>> poly) : coeffs_(poly.begin(), poly.end()) {
     ZeroCoef();
 }
 
@@ -24,7 +24,7 @@ Poly::Poly(std::initializer_list<int64_t> poly) {
     ZeroCoef();
 }
 
-Poly Poly::operator+=(const Poly &other) {
+Poly Poly::operator+=(const Poly& other) {
     for (auto [x, y] : other.coeffs_) {
         if (coeffs_.count(x) == 0) {
             coeffs_[x] = y;
@@ -36,7 +36,7 @@ Poly Poly::operator+=(const Poly &other) {
     return *this;
 }
 
-Poly Poly::operator-=(const Poly &other) {
+Poly Poly::operator-=(const Poly& other) {
     for (auto [x, y] : other.coeffs_) {
         if (coeffs_.count(x) == 0) {
             coeffs_[x] = y;
@@ -48,14 +48,14 @@ Poly Poly::operator-=(const Poly &other) {
     return *this;
 }
 
-Poly Poly::operator+(const Poly &other) {
+Poly Poly::operator+(const Poly& other) {
     Poly ans = *this;
     ans += other;
     ans.ZeroCoef();
     return ans;
 }
 
-Poly Poly::operator-(const Poly &other) {
+Poly Poly::operator-(const Poly& other) {
     Poly ans = *this;
     ans += -other;
     ans.ZeroCoef();
