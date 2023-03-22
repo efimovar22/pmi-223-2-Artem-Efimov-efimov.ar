@@ -148,6 +148,9 @@ std::ostream& operator<<(std::ostream& out, const Poly& data) {
             }
         }
         --iter;
+        if (iter == data.coeffs_.begin()) {
+            break;
+        }
     }
 
     return out;
