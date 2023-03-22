@@ -78,7 +78,7 @@ Poly Poly::operator*(const Poly& other) {
 }
 
 Poly Poly::operator*=(const Poly& other) {
-    *this = *this + other;
+    *this = *this * other;
     return *this;
 }
 
