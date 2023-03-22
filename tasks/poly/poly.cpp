@@ -124,7 +124,8 @@ std::ostream& operator<<(std::ostream& out, const Poly& data) {
         return out;
     }
     bool b = true;
-    auto iter = std::prev(data.coeffs_.end());
+    auto iter = data.coeffs_.end();
+    --iter;
     while (true) {
         if (iter->second != 0) {
             if (b) {
