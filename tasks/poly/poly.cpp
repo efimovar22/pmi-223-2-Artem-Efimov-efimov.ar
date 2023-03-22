@@ -14,9 +14,8 @@ Poly::Poly(std::initializer_list<std::pair<int64_t, int64_t>> poly) : coeffs_(po
 }
 
 Poly::Poly(std::initializer_list<int64_t> poly) {
-    auto iter = poly.begin();
     int64_t i = 0;
-    while (iter != poly.end()) {
+    for (auto iter = poly.begin(); iter != poly.end();) {
         coeffs_[i] = *iter;
         ++iter;
         ++i;
@@ -24,7 +23,7 @@ Poly::Poly(std::initializer_list<int64_t> poly) {
     ZeroCoef();
 }
 
-Poly Poly::operator+=(const Poly& other) {
+Poly& Poly::operator+=(const Poly& other) {
     for (auto [x, y] : other.coeffs_) {
         if (coeffs_.count(x) == 0) {
             coeffs_[x] = y;
@@ -36,7 +35,7 @@ Poly Poly::operator+=(const Poly& other) {
     return *this;
 }
 
-Poly Poly::operator-=(const Poly& other) {
+Poly& Poly::operator-=(const Poly& other) {
     for (auto [x, y] : other.coeffs_) {
         if (coeffs_.count(x) == 0) {
             coeffs_[x] = y;
@@ -77,7 +76,7 @@ Poly Poly::operator*(const Poly& other) {
     return ans;
 }
 
-Poly Poly::operator*=(const Poly& other) {
+Poly& Poly::operator*=(const Poly& other) {
     *this = *this * other;
     return *this;
 }
@@ -123,13 +122,13 @@ std::ostream& operator<<(std::ostream& out, const Poly& data) {
         out << " 0";
         return out;
     }
-    bool b = true;
+    bool first_zero = true;
     auto iter = data.coeffs_.end();
     --iter;
-    while (true) {
+    while (iter != data.coeffs_.begin()) {
         if (iter->second != 0) {
-            if (b) {
-                b = false;
+            if (first_zero) {
+                first_zero = false;
                 out << " " << iter->second;
                 if (iter->first != 0) {
                     out << "x^" << iter->first;
@@ -147,9 +146,6 @@ std::ostream& operator<<(std::ostream& out, const Poly& data) {
                     }
                 }
             }
-        }
-        if (iter == data.coeffs_.begin()) {
-            break;
         }
         --iter;
     }

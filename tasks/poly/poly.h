@@ -13,9 +13,9 @@ public:
     Poly(std::initializer_list<std::pair<int64_t, int64_t>> poly);
     Poly(std::initializer_list<int64_t> poly);
     Poly(const Poly& other) = default;
-    Poly operator+=(const Poly& other);
-    Poly operator-=(const Poly& other);
-    Poly operator*=(const Poly& other);
+    Poly& operator+=(const Poly& other);
+    Poly& operator-=(const Poly& other);
+    Poly& operator*=(const Poly& other);
     Poly operator+(const Poly& other);
     Poly operator-(const Poly& other);
     Poly operator*(const Poly& other);
