@@ -15,9 +15,8 @@ Poly::Poly(std::initializer_list<std::pair<int64_t, int64_t>> poly) : coeffs_(po
 
 Poly::Poly(std::initializer_list<int64_t> poly) {
     int64_t i = 0;
-    for (auto iter = poly.begin(); iter != poly.end();) {
+    for (auto iter = poly.begin(); iter < poly.end(); ++iter) {
         coeffs_[i] = *iter;
-        ++iter;
         ++i;
     }
     ZeroCoef();
@@ -122,13 +121,13 @@ std::ostream& operator<<(std::ostream& out, const Poly& data) {
         out << " 0";
         return out;
     }
-    bool first_zero = true;
+    bool b = true;
     auto iter = data.coeffs_.end();
     --iter;
-    while (iter != data.coeffs_.begin()) {
+    while (true) {
         if (iter->second != 0) {
-            if (first_zero) {
-                first_zero = false;
+            if (b) {
+                b = false;
                 out << " " << iter->second;
                 if (iter->first != 0) {
                     out << "x^" << iter->first;
