@@ -79,7 +79,7 @@ struct DIBHeader {
 #pragma pack(pop)
 
 void Image::Read(const char* path) {
-    const auto DEV = 255.0f;
+    const auto dev = 255.0f;
     std::ifstream f;
     f.open(path, std::ios::in | std::ios::binary);
 
@@ -112,9 +112,9 @@ void Image::Read(const char* path) {
         for (size_t x = 0; x < width_; ++x) {
             uint8_t color[3];
             f.read(reinterpret_cast<char*>(color), 3);
-            colors_[y][x].Red = static_cast<float>(color[2]) / DEV;
-            colors_[y][x].Green = static_cast<float>(color[1]) / DEV;
-            colors_[y][x].Blue = static_cast<float>(color[0]) / DEV;
+            colors_[y][x].Red = static_cast<float>(color[2]) / dev;
+            colors_[y][x].Green = static_cast<float>(color[1]) / dev;
+            colors_[y][x].Blue = static_cast<float>(color[0]) / dev;
         }
         f.ignore(padding_amount);
     }
@@ -127,8 +127,8 @@ void Image::Export(const char* path) const {
         std::cout << "File could not be opened\n";
         return;
     }
-    const auto DEV = 255.0f;
-    const size_t padding_amount = ((4 - (width_ * 3) % 4) % 4);
+    const auto dev = 255.0f;
+    const size_t padding_amount = static_cast<int>((4 - (width_ * 3) % 4) % 4);
 
     const size_t file_size = sizeof(BmpHeader) + sizeof(DIBHeader) + width_ * height_ * 3 + padding_amount * width_;
     const auto tw_f = 24;
@@ -147,9 +147,9 @@ void Image::Export(const char* path) const {
 
     for (size_t y = 0; y < height_; ++y) {
         for (size_t x = 0; x < width_; ++x) {
-            unsigned char r = static_cast<unsigned char>(GetColor(x, y).Red * DEV);
-            unsigned char g = static_cast<unsigned char>(GetColor(x, y).Green * DEV);
-            unsigned char b = static_cast<unsigned char>(GetColor(x, y).Blue * DEV);
+            unsigned char r = static_cast<unsigned char>(GetColor(x, y).Red * dev);
+            unsigned char g = static_cast<unsigned char>(GetColor(x, y).Green * dev);
+            unsigned char b = static_cast<unsigned char>(GetColor(x, y).Blue * dev);
 
             unsigned char color[] = {b, g, r};
 

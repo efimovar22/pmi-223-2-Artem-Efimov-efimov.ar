@@ -13,7 +13,7 @@ Image GaussianBlur::Apply(const Image &image) const {
     for (size_t x = 0; x < image.Height(); ++x) {
         std::vector<Color> now(image.Width());
         for (size_t y = 0; y < image.Width(); ++y) {
-            r = static_cast<double>(sqrt(x * x + y * y));
+            r = sqrt(x * x + y * y);
             now[y] = {(exp(-(r * r) / s)) / (M_PI * s), (exp(-(r * r) / s)) / (M_PI * s),
                       (exp(-(r * r) / s)) / (M_PI * s)};
             sum_r += image[x][y].Red;
