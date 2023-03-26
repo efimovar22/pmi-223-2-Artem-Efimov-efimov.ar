@@ -105,7 +105,7 @@ void Image::Read(const char* path) {
     width_ = info_header.width;
     height_ = info_header.height;
 
-    colors_.resize(width_ * height_);
+    colors_ = std::vector(height_, std::vector<Color>(width_));
 
     const int padding_amount = static_cast<int>((4 - (width_ * 3) % 4) % 4);
     for (size_t y = 0; y < height_; ++y) {
@@ -147,9 +147,9 @@ void Image::Export(const char* path) const {
 
     for (size_t y = 0; y < height_; ++y) {
         for (size_t x = 0; x < width_; ++x) {
-            unsigned char r = static_cast<unsigned char>(GetColor(x, y).Red * dev);
-            unsigned char g = static_cast<unsigned char>(GetColor(x, y).Green * dev);
-            unsigned char b = static_cast<unsigned char>(GetColor(x, y).Blue * dev);
+            unsigned char r = static_cast<unsigned char>(GetColor(y, x).Red * dev);
+            unsigned char g = static_cast<unsigned char>(GetColor(y, x).Green * dev);
+            unsigned char b = static_cast<unsigned char>(GetColor(y, x).Blue * dev);
 
             unsigned char color[] = {b, g, r};
 

@@ -10,6 +10,8 @@
 #include "filter.h"
 
 int main(int argc, char** argv) {
+    Image image;
+    image.Read(argv[1]);
     FilterSequence filter_seq;
     for (const auto& [filter_name, filter_args] : ParseArgs(argc, argv)) {
         if (filter_name == "-gs") {
@@ -34,8 +36,8 @@ int main(int argc, char** argv) {
             }
         }
     }
-    Image image;
-    image.Read(argv[1]);
+    image = filter_seq.Apply(image);
     image.Export(argv[2]);
+    std::cout << argv[1];
     return 0;
 }
