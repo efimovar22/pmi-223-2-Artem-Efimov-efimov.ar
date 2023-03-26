@@ -21,7 +21,7 @@ Image EdgeDetection::Apply(const Image& image) const {
                             image.GetColorsVector()[std::min(i + 1, image.Height() - 1)][j].Blue +
                             image.GetColorsVector()[i][std::max(j, static_cast<size_t>(1)) - 1].Blue +
                             image.GetColorsVector()[i][std::min(j + 1, image.Width() - 1)].Blue) +
-                          4 * image.GetColorsVector()[i][j].Green;
+                          4 * image.GetColorsVector()[i][j].Blue;
         }
         ans.push_back(vec);
     }
