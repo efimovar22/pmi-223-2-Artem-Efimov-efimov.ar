@@ -107,7 +107,7 @@ void Image::Read(const char* path) {
 
     colors_.resize(width_ * height_);
 
-    const int padding_amount = ((4 - (width_ * 3) % 4) % 4);
+    const int padding_amount = static_cast<int>((4 - (width_ * 3) % 4) % 4);
     for (size_t y = 0; y < height_; ++y) {
         for (size_t x = 0; x < width_; ++x) {
             uint8_t color[3];
