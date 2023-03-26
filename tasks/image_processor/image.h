@@ -24,6 +24,7 @@ public:
     void MakeColor(size_t x, size_t y, Color color);
     void Read(const char* path);
     void Export(const char* path) const;
+
 private:
     size_t height_ = 0;
     size_t width_ = 0;

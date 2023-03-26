@@ -1,7 +1,7 @@
 #include "edge_detection.h"
 
 const std::vector<std::vector<int16_t>> MATRIX = {{0, -1, 0}, {-1, 4, -1}, {0, -1, 0}};
-Image EdgeDetection::Apply(const Image &image) const {
+Image EdgeDetection::Apply(const Image& image) const {
     std::vector<std::vector<Color>> ans;
     for (size_t i = 0; i < image.Height(); ++i) {
         std::vector<Color> vec(image.Width());

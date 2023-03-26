@@ -11,4 +11,3 @@ struct ParsedFilter {
     std::vector<std::string> GetPar() const;
 };
 std::vector<ParsedFilter> ParseArgs(int argc, char* argv[]);
-

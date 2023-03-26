@@ -87,8 +87,8 @@ void Image::Read(const char* path) {
         return;
     }
 
-//    const size_t fileHeaderSize = sizeof(BmpHeader);
-//    const size_t informationHeaderSize = sizeof(DIBHeader);
+    //    const size_t fileHeaderSize = sizeof(BmpHeader);
+    //    const size_t informationHeaderSize = sizeof(DIBHeader);
 
     BmpHeader file_header;
     f.read(reinterpret_cast<char*>(&file_header), sizeof(BmpHeader));
@@ -132,16 +132,15 @@ void Image::Export(const char* path) const {
 
     const size_t file_size = sizeof(BmpHeader) + sizeof(DIBHeader) + width_ * height_ * 3 + padding_amount * width_;
 
-    BmpHeader file_header = {.file_size = static_cast<uint32_t>(file_size), .data_offset = sizeof(BmpHeader) + sizeof(DIBHeader)};
-    DIBHeader info_header = {
-        .header_size = sizeof(DIBHeader),
-        .width = static_cast<int32_t>(width_),
-        .height = static_cast<int32_t>(height_),
-        .number_of_planes = 1,
-        .bits_per_pixel = 24,
-        .compression = 0,
-        .bitmap_size = static_cast<uint32_t>(file_size - sizeof(BmpHeader) - sizeof(DIBHeader))
-    };
+    BmpHeader file_header = {.file_size = static_cast<uint32_t>(file_size),
+                             .data_offset = sizeof(BmpHeader) + sizeof(DIBHeader)};
+    DIBHeader info_header = {.header_size = sizeof(DIBHeader),
+                             .width = static_cast<int32_t>(width_),
+                             .height = static_cast<int32_t>(height_),
+                             .number_of_planes = 1,
+                             .bits_per_pixel = 24,
+                             .compression = 0,
+                             .bitmap_size = static_cast<uint32_t>(file_size - sizeof(BmpHeader) - sizeof(DIBHeader))};
 
     f.write(reinterpret_cast<char*>(&file_header), sizeof(BmpHeader));
     f.write(reinterpret_cast<char*>(&info_header), sizeof(DIBHeader));
