@@ -1,6 +1,6 @@
 #include "negative.h"
 
-const int16_t BIT_BMP = 255;
+const int16_t BIT_BMP = 1;
 Image Negative::Apply(const Image& image) const {
     std::vector<std::vector<Color>> ans;
     for (size_t i = 0; i < image.Height(); ++i) {
