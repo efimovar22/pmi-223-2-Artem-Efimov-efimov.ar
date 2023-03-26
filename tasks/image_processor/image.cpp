@@ -79,6 +79,7 @@ struct DIBHeader {
 #pragma pack(pop)
 
 void Image::Read(const char* path) {
+    const auto DEV = 255.0f;
     std::ifstream f;
     f.open(path, std::ios::in | std::ios::binary);
 
@@ -106,17 +107,16 @@ void Image::Read(const char* path) {
 
     colors_.resize(width_ * height_);
 
-    const int paddingAmount = ((4 - (width_ * 3) % 4) % 4);
-
+    const int padding_amount = ((4 - (width_ * 3) % 4) % 4);
     for (size_t y = 0; y < height_; ++y) {
         for (size_t x = 0; x < width_; ++x) {
             uint8_t color[3];
             f.read(reinterpret_cast<char*>(color), 3);
-            colors_[y][x].Red = static_cast<float>(color[2]) / 255.0f;
-            colors_[y][x].Green = static_cast<float>(color[1]) / 255.0f;
-            colors_[y][x].Blue = static_cast<float>(color[0]) / 255.0f;
+            colors_[y][x].Red = static_cast<float>(color[2]) / DEV;
+            colors_[y][x].Green = static_cast<float>(color[1]) / DEV;
+            colors_[y][x].Blue = static_cast<float>(color[0]) / DEV;
         }
-        f.ignore(paddingAmount);
+        f.ignore(padding_amount);
     }
     std::cout << "File read" << std::endl;
 }
@@ -127,18 +127,18 @@ void Image::Export(const char* path) const {
         std::cout << "File could not be opened\n";
         return;
     }
-
+    const auto DEV = 255.0f;
     const size_t padding_amount = ((4 - (width_ * 3) % 4) % 4);
 
     const size_t file_size = sizeof(BmpHeader) + sizeof(DIBHeader) + width_ * height_ * 3 + padding_amount * width_;
-
+    const auto tw_f = 24;
     BmpHeader file_header = {.file_size = static_cast<uint32_t>(file_size),
                              .data_offset = sizeof(BmpHeader) + sizeof(DIBHeader)};
     DIBHeader info_header = {.header_size = sizeof(DIBHeader),
                              .width = static_cast<int32_t>(width_),
                              .height = static_cast<int32_t>(height_),
                              .number_of_planes = 1,
-                             .bits_per_pixel = 24,
+                             .bits_per_pixel = tw_f,
                              .compression = 0,
                              .bitmap_size = static_cast<uint32_t>(file_size - sizeof(BmpHeader) - sizeof(DIBHeader))};
 
@@ -147,15 +147,15 @@ void Image::Export(const char* path) const {
 
     for (size_t y = 0; y < height_; ++y) {
         for (size_t x = 0; x < width_; ++x) {
-            unsigned char r = static_cast<unsigned char>(GetColor(x, y).Red * 255.0f);
-            unsigned char g = static_cast<unsigned char>(GetColor(x, y).Green * 255.0f);
-            unsigned char b = static_cast<unsigned char>(GetColor(x, y).Blue * 255.0f);
+            unsigned char r = static_cast<unsigned char>(GetColor(x, y).Red * DEV);
+            unsigned char g = static_cast<unsigned char>(GetColor(x, y).Green * DEV);
+            unsigned char b = static_cast<unsigned char>(GetColor(x, y).Blue * DEV);
 
             unsigned char color[] = {b, g, r};
 
             f.write(reinterpret_cast<char*>(color), 3);
         }
-        f.write("\0\0\0", padding_amount);
+        f.write("\0\0\0", static_cast<std::streamsize>(padding_amount));
     }
     f.close();
     std::cout << "File created\n";

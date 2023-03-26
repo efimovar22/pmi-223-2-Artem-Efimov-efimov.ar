@@ -11,7 +11,7 @@ public:
     Image() = default;
     Image(size_t height, size_t width);
     Image(const Image& other);
-    Image(const std::vector<std::vector<Color>>& other);
+    explicit Image(const std::vector<std::vector<Color>>& other);
     ~Image() = default;
     size_t Height() const;
     size_t Width() const;

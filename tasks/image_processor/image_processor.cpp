@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         } else if (filter_name == "-sharp") {
             filter_seq.AddFilter(new Sharpening());
         } else if (filter_name == "-blur") {
-            if (filter_args.size() > 0) {
+            if (!filter_args.empty()) {
                 filter_seq.AddFilter(new GaussianBlur(std::stod(filter_args[0])));
             } else {
                 std::cout << "Can not make";

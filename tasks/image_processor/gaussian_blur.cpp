@@ -2,18 +2,18 @@
 
 GaussianBlur::GaussianBlur(double sigma) : sigma_(sigma) {
 }
-
+const double TWO = 2.0;
 Image GaussianBlur::Apply(const Image &image) const {
     std::vector<std::vector<Color>> ans;
-    double r = 2.0 * sigma_ * sigma_;
-    double s = 2.0 * sigma_ * sigma_;
+    double r = 0.0;
+    double s = TWO * sigma_ * sigma_;
     double sum_r = 0.0;
     double sum_g = 0.0;
     double sum_b = 0.0;
     for (size_t x = 0; x < image.Height(); ++x) {
         std::vector<Color> now(image.Width());
         for (size_t y = 0; y < image.Width(); ++y) {
-            r = sqrt(x * x + y * y);
+            r = static_cast<double>(sqrt(x * x + y * y));
             now[y] = {(exp(-(r * r) / s)) / (M_PI * s), (exp(-(r * r) / s)) / (M_PI * s),
                       (exp(-(r * r) / s)) / (M_PI * s)};
             sum_r += image[x][y].Red;
@@ -30,5 +30,5 @@ Image GaussianBlur::Apply(const Image &image) const {
             ans[i][j].Blue = image[i][j].Blue / sum_b;
         }
     }
-    return ans;
+    return Image(ans);
 }
