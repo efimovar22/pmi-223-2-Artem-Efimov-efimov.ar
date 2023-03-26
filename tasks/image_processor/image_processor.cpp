@@ -34,6 +34,14 @@ int main(int argc, char** argv) {
                 std::cout << "Can not make";
                 return 0;
             }
+        } else if (filter_name == "-edge") {
+            if (!filter_args.empty()) {
+                filter_seq.AddFilter(new Grayscale());
+                filter_seq.AddFilter(new EdgeDetection(std::stod(filter_args[0])));
+            } else {
+                std::cout << "Can not make";
+                return 0;
+            }
         }
     }
     image = filter_seq.Apply(image);
