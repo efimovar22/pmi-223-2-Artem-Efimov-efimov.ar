@@ -12,5 +12,5 @@ Image Negative::Apply(const Image& image) const {
         }
         ans.push_back(vec);
     }
-    return ans;
+    return Image(ans);
 }

@@ -43,5 +43,5 @@ Image EdgeDetection::Apply(const Image& image) const {
             }
         }
     }
-    return ans;
+    return Image(ans);
 }
